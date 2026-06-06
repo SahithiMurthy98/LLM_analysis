@@ -1,14 +1,7 @@
 -- =============================================================================
 -- CA Housing Price Analysis — MySQL Schema
 -- Author: Sahithi Locharala
--- Database: locharv_cap1 (mysql.clarksonmsda.org)
 --
--- Extends the existing ca_median_prices table with:
---   1. ca_actual_prices  — real CAR housing data (from HomeMedianPrices.csv)
---   2. ca_quality_audit  — per-run validation audit log
---   3. 7 KPI views built directly on your real tables
--- =============================================================================
-
 USE locharv_cap1;
 
 -- CREATE TABLE ca_median_prices (
@@ -55,13 +48,13 @@ CREATE TABLE IF NOT EXISTS ca_quality_audit (
 
 -- ---------------------------------------------------------------------------
 -- KPI VIEWS
--- All built on ca_median_prices (your real LLM output table) +
--- ca_actual_prices (real CAR data).
+-- All built on ca_median_prices+
+-- ca_actual_prices.
 -- month column is VARCHAR 'YYYY-MM' in both tables — joined on month + area.
 -- ---------------------------------------------------------------------------
 
 -- KPI 1: Monthly accuracy — actual vs avg LLM price per model & area
--- Mirrors notebook logic: difference = actual - llm, percent_error = difference/actual * 100
+-- difference = actual - llm, percent_error = difference/actual * 100
 CREATE OR REPLACE VIEW vw_kpi_monthly_accuracy AS
 SELECT
     a.area,
